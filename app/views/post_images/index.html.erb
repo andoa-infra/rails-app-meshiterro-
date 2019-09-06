@@ -3,7 +3,7 @@
     <div class="row">
       <div class="col-md-8 col-sm-offset-2">
         <div class="masonry-wrapper-cols">
-          <div class="masonry-gutter"></div>
+          <div class="masonry-gutter"><!-- ここでdiv閉じてていいのか？（4章）--></div>
             <% @post_images.each do |post_image| %>
             <div class="masonry-block">
               <div class="block block-image v1">
@@ -13,7 +13,7 @@
                   </div>
                 </div>
                 <div class="block-content">
-                  <%= image_tag('sample-author1.jpg', class: "img-circle pull-left profile-thumb") %>
+                  <%= attachment_image_tag post_image.user, :profile_image, :fill, 60, 60, fallback: "no_image.jpg", class: "img-circle pull-left profile-thumb" %>
                   <h3 class="block-title">
                   <%= link_to post_image_path(post_image.id) do %>
                      <i class="fa fa-map-marker"></i><%= post_image.shop_name %>
@@ -25,13 +25,14 @@
                       <%= post_image.user.name %>
                     </li>
                     <li>
-                    <a href="#">23 コメント</a>
+                    <%= link_to "#{post_image.post_comments.count} コメント", post_image_path(post_image.id) %>
                     </li>
                   </ul>
                 </div>
               </div>
             </div>
             <% end %>
+            <%= paginate @post_images, class:"paginate" %>
         </div>
       </div>
     </div>
